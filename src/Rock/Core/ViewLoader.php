@@ -5,8 +5,6 @@ class Rock_Core_ViewLoader
 
     private static $instance = null;
 
-    private static $pathRock = '';
-
     private $vars = array();
 
     /**
@@ -23,9 +21,7 @@ class Rock_Core_ViewLoader
     }
 
     private function __construct()
-    {
-        self::$pathRock = dirname(dirname(__FILE__)) . '/';
-    }
+    {}
 
     private static function isSsl()
     {
@@ -101,7 +97,10 @@ class Rock_Core_ViewLoader
 
     public static function getPathRock()
     {
-        return self::$pathRock;
+        $arrayTrace = debug_backtrace();
+        $arrayPop = array_pop($arrayTrace);
+        $pathView = dirname($arrayPop['file']);
+        return $pathView . DIRECTORY_SEPARATOR;
     }
 
     private function detectBrowser()
@@ -118,8 +117,7 @@ class Rock_Core_ViewLoader
 
     public static function checkDir($browser = 'w3c')
     {
-        $vendor = Rock_Core_Front::getVendor();
-        $dirName = $vendor . '/view/' . $browser;
+        $dirName = self::getPathRock() . $browser;
         return is_dir($dirName);
     }
 
@@ -134,11 +132,11 @@ class Rock_Core_ViewLoader
 
     public function load($viewPath, array $data = array(), $echo = true)
     {
-        $pathRock = self::$pathRock;
+        $pathRock = self::getPathRock();
         $this->setData($data);
         $browser = $this->detectBrowser();
-        $vendor = Rock_Core_Front::getVendor();
-        $filename = $pathRock . $vendor . '/view/' . $browser . '/' . $viewPath . '.php';
+        // $vendor = Rock_Core_Front::getVendor();
+        $filename = $pathRock . $browser . DIRECTORY_SEPARATOR . $viewPath . '.php';
         ob_start();
         if (is_file($filename)) {
             include $filename;
