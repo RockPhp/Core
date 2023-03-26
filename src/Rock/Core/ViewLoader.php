@@ -7,21 +7,12 @@ class Rock_Core_ViewLoader
 
     private $vars = array();
 
-    /**
-     * Singleton
-     *
-     * @return Rock_Core_ViewLoader
-     */
-    public static function getInstance()
-    {
-        if (self::$instance === null) {
-            self::$instance = new self();
-        }
-        return self::$instance;
-    }
+    private $viewFilesPath;
 
-    private function __construct()
-    {}
+    public function __construct($viewFilesPath)
+    {
+        $this->viewFilesPath = $viewFilesPath;
+    }
 
     private static function isSsl()
     {
@@ -132,11 +123,9 @@ class Rock_Core_ViewLoader
 
     public function load($viewPath, array $data = array(), $echo = true)
     {
-        $pathRock = self::getPathRock();
         $this->setData($data);
         $browser = $this->detectBrowser();
-        // $vendor = Rock_Core_Front::getVendor();
-        $filename = $pathRock . $browser . DIRECTORY_SEPARATOR . $viewPath . '.php';
+        $filename = $this->viewFilesPath . $browser . DIRECTORY_SEPARATOR . $viewPath . '.php';
         ob_start();
         if (is_file($filename)) {
             include $filename;
