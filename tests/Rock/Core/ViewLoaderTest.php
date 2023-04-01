@@ -1,15 +1,11 @@
 <?php
-namespace Rock\Core;
 
-use PHPUnit\Framework\TestCase;
-use Some;
-
-final class ViewLoaderTest extends TestCase
+final class ViewLoaderTest extends PHPUnit_Framework_TestCase
 {
 
     private function getViewPath()
     {
-        return dirname(__DIR__, 2) . '/view/';
+        return dirname(dirname(dirname(__FILE__))) . '/view/';
     }
 
     /**
@@ -18,7 +14,7 @@ final class ViewLoaderTest extends TestCase
      */
     public function vwloader()
     {
-        $vl = new \Rock_Core_ViewLoader($this->getViewPath());
+        $vl = new Rock_Core_ViewLoader($this->getViewPath());
         $content = $vl->load('hello', array(), false);
         $this->assertEquals('something', $content);
 
@@ -34,7 +30,7 @@ final class ViewLoaderTest extends TestCase
      */
     public function someFront()
     {
-        $ctrlIndex = new Some\Ctr\Index();
+        $ctrlIndex = new Some_Ctr_Index();
         $viewPath = $ctrlIndex->getViewPath();
         $this->assertEquals($this->getViewPath(), $viewPath);
 

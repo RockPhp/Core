@@ -9,14 +9,25 @@
 		}
 	],
 	"autoload": {
-		"classmap": [
-			"tests/"
-		],
 		"psr-0": {
-			"": "src/"
+			"": [
+				"src/",
+				"tests/"
+			]
 		}
 	},
 	"require-dev": {
-		"phpunit/phpunit": "9.5.28"
+		"rock/phpunit": "@dev"
+	},
+	"scripts": {
+		"post-install-cmd": [
+			"xrstf\\Composer52\\Generator::onPostInstallCmd"
+		],
+		"post-update-cmd": [
+			"xrstf\\Composer52\\Generator::onPostInstallCmd"
+		],
+		"post-autoload-dump": [
+			"xrstf\\Composer52\\Generator::onPostInstallCmd"
+		]
 	}
 }
