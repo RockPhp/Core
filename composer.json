@@ -21,13 +21,16 @@
 	},
 	"scripts": {
 		"post-install-cmd": [
-			"xrstf\\Composer52\\Generator::onPostInstallCmd"
+			"xrstf\\Composer52\\Generator::onPostInstallCmd",
+            "PHPUnit\\ReplaceBin::copy"
 		],
 		"post-update-cmd": [
-			"xrstf\\Composer52\\Generator::onPostInstallCmd"
+			"xrstf\\Composer52\\Generator::onPostInstallCmd",
+            "PHPUnit\\ReplaceBin::copy"
 		],
 		"post-autoload-dump": [
-			"xrstf\\Composer52\\Generator::onPostInstallCmd"
+			"xrstf\\Composer52\\Generator::onPostInstallCmd",
+            "PHPUnit\\ReplaceBin::copy"
 		]
 	}
 }
